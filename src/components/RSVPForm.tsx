@@ -5,14 +5,13 @@ import RSVPOption from "./RSVPOption";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
-import { Heart, HeartCrack } from "lucide-react";
 
 const yesOptions = [
   "Since my investment in cheese has matured, I have sufficient capital available to escape from Somaliland, and thus will be able to attend the wedding.",
-  "My parole officer has granted me a 24-hour furlough, so count me in!",
-  "I've successfully bribed the ducks blocking my driveway. I'll be there!",
+  "My parole officer has granted me a 24-hour furlough, so count me in.",
+  "I've successfully bribed the ducks blocking my driveway. I shall be in attendance.",
   "The prophecy has been fulfilled. The stars align. I shall attend.",
-  "My time machine repair is complete, and I have confirmed via future-me that I was indeed present. See you there!",
+  "My time machine repair is complete, and I have confirmed via future-me that I was indeed present.",
   "I've concluded my negotiations with the squirrel mafia. Wedding attendance: approved.",
 ];
 
@@ -42,8 +41,8 @@ const RSVPForm = () => {
     
     if (!name.trim()) {
       toast({
-        title: "Whoa there, mysterious stranger!",
-        description: "We need your name so we know whose plate to lick... er, set.",
+        title: "A Name is Required",
+        description: "We must know how to address you in the registry.",
         variant: "destructive",
       });
       return;
@@ -51,8 +50,8 @@ const RSVPForm = () => {
 
     if (!selectedOption) {
       toast({
-        title: "Pick your destiny!",
-        description: "Choose one of the ridiculous options above.",
+        title: "Please Select Your Response",
+        description: "Kindly choose one of the distinguished options above.",
         variant: "destructive",
       });
       return;
@@ -68,16 +67,16 @@ const RSVPForm = () => {
         particleCount: 100,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ["#e07850", "#5d9a7d", "#d4849a"],
+        colors: ["#d4a853", "#f0d78c", "#a68932"],
       });
       toast({
-        title: "HUZZAH! 🎉",
-        description: "Your presence has been noted in the sacred scrolls of attendance.",
+        title: "Most Excellent",
+        description: "Your attendance has been recorded in the official registry.",
       });
     } else {
       toast({
-        title: "We understand... 💔",
-        description: "Your raccoon's health comes first. We'll save you some cake in spirit.",
+        title: "We Understand",
+        description: "Your regrets have been noted with appropriate solemnity.",
       });
     }
 
@@ -88,34 +87,34 @@ const RSVPForm = () => {
   if (hasSubmitted) {
     return (
       <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="text-center py-12"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="text-center py-16"
       >
         {responseType === "yes" ? (
           <>
-            <Heart className="w-24 h-24 mx-auto text-coral animate-float" />
-            <h2 className="font-display text-5xl mt-6 text-foreground">
-              See you there, {name}!
+            <span className="font-script text-6xl text-gold gold-glow">❦</span>
+            <h2 className="font-display text-3xl md:text-4xl mt-8 gold-shimmer">
+              We Await Your Arrival
             </h2>
-            <p className="text-muted-foreground mt-4 text-lg">
-              We're absolutely thrilled you're coming. Don't forget to bring your escaped-from-Somaliland vibes!
+            <p className="font-heading text-lg text-muted-foreground mt-6 max-w-md mx-auto leading-relaxed">
+              {name}, your presence shall grace our celebration.
             </p>
           </>
         ) : (
           <>
-            <HeartCrack className="w-24 h-24 mx-auto text-blush animate-float" />
-            <h2 className="font-display text-5xl mt-6 text-foreground">
-              We'll miss you, {name}!
+            <span className="font-script text-6xl text-muted-foreground">❦</span>
+            <h2 className="font-display text-3xl md:text-4xl mt-8 text-foreground">
+              You Shall Be Missed
             </h2>
-            <p className="text-muted-foreground mt-4 text-lg">
-              We hope your raccoon makes a full recovery. You'll be there in spirit! 🦝
+            <p className="font-heading text-lg text-muted-foreground mt-6 max-w-md mx-auto leading-relaxed">
+              {name}, we understand. Your spirit shall be with us.
             </p>
           </>
         )}
         <Button
           variant="outline"
-          className="mt-8"
+          className="mt-10 font-heading text-xs tracking-wide-formal uppercase border-gold/50 text-gold hover:bg-gold/10 hover:text-gold"
           onClick={() => {
             setHasSubmitted(false);
             setName("");
@@ -123,35 +122,37 @@ const RSVPForm = () => {
             setResponseType(null);
           }}
         >
-          Submit another response (for a friend who definitely exists)
+          Submit Another Response
         </Button>
       </motion.div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
-      <div className="space-y-2">
-        <label htmlFor="name" className="font-display text-2xl text-foreground">
-          Who art thou?
+    <form onSubmit={handleSubmit} className="space-y-10">
+      <div className="space-y-4 text-center">
+        <label htmlFor="name" className="font-display text-xl md:text-2xl gold-shimmer block">
+          Your Distinguished Name
         </label>
         <Input
           id="name"
           type="text"
-          placeholder="Your name (or alias, we don't judge)"
+          placeholder="Enter your name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="text-lg py-6 bg-card"
+          className="text-center font-heading text-lg py-6 bg-background border-border/50 focus:border-gold max-w-md mx-auto"
         />
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid md:grid-cols-2 gap-10">
         {/* Yes Options */}
-        <div className="space-y-4">
-          <h3 className="font-display text-3xl text-sage flex items-center gap-2">
-            <Heart className="w-6 h-6" />
-            I shall attend!
+        <div className="space-y-6">
+          <h3 className="font-display text-xl md:text-2xl text-gold text-center tracking-wide">
+            I Shall Attend
           </h3>
+          <div className="divider mb-6">
+            <span className="font-script text-lg text-gold px-2">✦</span>
+          </div>
           <div className="space-y-3">
             {yesOptions.map((option) => (
               <RSVPOption
@@ -166,11 +167,13 @@ const RSVPForm = () => {
         </div>
 
         {/* No Options */}
-        <div className="space-y-4">
-          <h3 className="font-display text-3xl text-blush flex items-center gap-2">
-            <HeartCrack className="w-6 h-6" />
-            Alas, I cannot...
+        <div className="space-y-6">
+          <h3 className="font-display text-xl md:text-2xl text-muted-foreground text-center tracking-wide">
+            Regretfully, I Cannot
           </h3>
+          <div className="divider mb-6">
+            <span className="font-script text-lg text-muted-foreground px-2">✦</span>
+          </div>
           <div className="space-y-3">
             {noOptions.map((option) => (
               <RSVPOption
@@ -191,15 +194,15 @@ const RSVPForm = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="flex justify-center pt-4"
+            className="flex justify-center pt-6"
           >
             <Button
               type="submit"
               size="lg"
               disabled={isSubmitting}
-              className="font-display text-2xl px-12 py-6 bg-primary hover:bg-primary/90"
+              className="font-heading text-sm tracking-wide-formal uppercase px-12 py-6 bg-gold text-charcoal hover:bg-gold/90 border-0"
             >
-              {isSubmitting ? "Consulting the oracle..." : "Submit My Fate"}
+              {isSubmitting ? "Recording..." : "Confirm Response"}
             </Button>
           </motion.div>
         )}
