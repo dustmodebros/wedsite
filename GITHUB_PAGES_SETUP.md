@@ -18,6 +18,7 @@ This project is configured to automatically deploy to GitHub Pages when you push
    - After the first deployment completes, your site will be available at:
      - If your repo is named `username.github.io`: `https://username.github.io`
      - If your repo has a different name (like `wedsite`): `https://username.github.io/wedsite/`
+   - **Important**: Make sure you're accessing the site from the account that owns the repository (e.g., if repo is under `dustmodebros`, use `https://dustmodebros.github.io/repo-name/`)
 
 ## How It Works
 
@@ -42,4 +43,8 @@ If you want to use a custom domain:
 
 - **Build fails?** Check the Actions tab for error messages
 - **Site not loading?** Make sure GitHub Pages is enabled and the workflow completed successfully
-- **404 errors?** Verify the base path matches your repository name
+- **404 errors?** 
+  - Verify the base path matches your repository name
+  - Make sure you're accessing the site from the correct GitHub account (the one that owns the repository)
+  - Check that the repository is under the account you want to host from (Settings → General → Repository name shows the owner)
+  - If you're committing from one account but hosting from another, make sure the repository is transferred to or created under the hosting account
