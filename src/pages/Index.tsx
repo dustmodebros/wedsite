@@ -3,57 +3,58 @@ import RSVPForm from "@/components/RSVPForm";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background py-8 px-4">
-      <div className="max-w-5xl mx-auto">
+    <div className="min-h-screen bg-background py-16 px-4">
+      <div className="max-w-3xl mx-auto">
         {/* Header */}
         <motion.header
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.2 }}
+          className="text-center mb-16"
         >
+          <div className="ornament mb-8" />
+          
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="text-muted-foreground text-lg mb-2"
+            transition={{ delay: 0.3 }}
+            className="font-body text-sm tracking-widest uppercase text-muted-foreground mb-6"
           >
-            You are cordially (and chaotically) invited to
+            The Honour of Your Presence is Requested
           </motion.p>
           
-          <h1 className="font-display text-6xl md:text-8xl text-foreground mb-4">
-            <span className="squiggle-underline">The Wedding</span>
+          <h1 className="font-display text-5xl md:text-7xl text-foreground mb-6 tracking-tight">
+            Wedding Invitation
           </h1>
           
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="font-display text-3xl md:text-4xl text-coral"
+            transition={{ delay: 0.5 }}
+            className="font-display text-2xl md:text-3xl text-gold italic"
           >
-            of Two Absolute Legends
+            A Most Distinguished Affair
           </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.6, type: "spring" }}
-            className="mt-8 inline-block"
+          <div className="divider my-10" />
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.7 }}
+            className="font-body text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed"
           >
-            <div className="doodle-border rounded-lg p-4 bg-card inline-block">
-              <p className="text-muted-foreground">
-                Please respond so we know how many snacks to hoard
-              </p>
-            </div>
-          </motion.div>
+            Your timely response is respectfully requested, that we may ensure 
+            adequate provisions for all distinguished guests.
+          </motion.p>
         </motion.header>
 
         {/* RSVP Form */}
         <motion.main
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.6 }}
-          className="bg-card rounded-2xl p-6 md:p-10 doodle-border"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.9, duration: 0.8 }}
+          className="bg-card p-8 md:p-12 formal-border"
         >
           <RSVPForm />
         </motion.main>
@@ -62,13 +63,11 @@ const Index = () => {
         <motion.footer
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="text-center mt-12 text-muted-foreground"
+          transition={{ delay: 1.2 }}
+          className="text-center mt-16"
         >
-          <p className="font-display text-xl">
-            Made with questionable decisions & love 💕
-          </p>
-          <p className="text-sm mt-2">
+          <div className="ornament mb-6" />
+          <p className="font-body text-sm tracking-widest uppercase text-muted-foreground">
             dustmodebros.me
           </p>
         </motion.footer>
