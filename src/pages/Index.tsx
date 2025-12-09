@@ -68,7 +68,7 @@ const Index = () => {
         >
           <div className="ornament mb-6" />
           <p className="font-body text-sm tracking-widest text-muted-foreground">
-            Hosted with love on dustmodebros.me
+            Hosted with "love" on dustmodebros.me
             <br />
             If you have any problems with the RSVP form, please contact Sam at:
             <a href="mailto:mistersamstephens@gmail.com" className="text-primary">

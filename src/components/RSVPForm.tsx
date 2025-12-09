@@ -9,20 +9,20 @@ import { Heart, HeartCrack } from "lucide-react";
 
 const yesOptions = [
   "Since my investment in cheese has matured, I have sufficient capital available to escape from Somaliland, and thus will be able to attend the wedding.",
-  "Example 2 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
-  "Example 3 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
-  "Example 4 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
-  "Example 5 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
-  "Example 6 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
+  "yes option 2 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
+  "yes option 3 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
+  "yes option 4 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
+  "yes option 5 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
+  "yes option 6 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
 ];
 
 const noOptions = [
   "My raccoon is scheduled to contract hepatitis on that day so I am sadly unable to attend.",
-  "Example 2 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
-  "Example 3 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
-  "Example 4 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
-  "Example 5 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
-  "Example 6 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
+  "no option 2 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
+  "no option 3 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
+  "no option 4 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
+  "no option 5 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
+  "no option 6 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
 ];
 
 const RSVPForm = () => {
@@ -92,7 +92,7 @@ const RSVPForm = () => {
       console.log('❌ Validation failed: name is empty');
       toast({
         title: "Whoa there, mysterious stranger!",
-        description: "We need your name so we know whose plate to lick... er, set.",
+        description: "We need your name so we know who to save a seat for!",
         variant: "destructive",
       });
       return;
@@ -101,7 +101,7 @@ const RSVPForm = () => {
     if (!selectedOption) {
       console.log('❌ Validation failed: no option selected');
       toast({
-        title: "Pick your destiny!",
+        title: "Pick your response!",
         description: "Choose one of the options above.",
         variant: "destructive",
       });
@@ -239,7 +239,7 @@ const RSVPForm = () => {
             setResponseType(null);
           }}
         >
-          Submit another response (for a friend who definitely exists)
+          Submit another response
         </Button>
       </motion.div>
     );
@@ -317,7 +317,7 @@ const RSVPForm = () => {
               disabled={isSubmitting}
               className="font-display text-2xl px-12 py-6 bg-primary hover:bg-primary/90"
             >
-              {isSubmitting ? "Awaiting choice..." : "Submit My Response"}
+              {isSubmitting ? "Submitting..." : "Submit My Response"}
             </Button>
           </motion.div>
         )}
