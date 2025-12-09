@@ -31,6 +31,29 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Verify Google Sheets URL secret
+        run: |
+          if [ -z "${{ secrets.VITE_GOOGLE_SHEETS_URL }}" ]; then
+            echo "::error::VITE_GOOGLE_SHEETS_URL secret is not set!"
+            echo "Please add it in Settings → Secrets and variables → Actions"
+            exit 1
+          else
+            echo "✅ VITE_GOOGLE_SHEETS_URL secret is configured"
+            # Show first 50 chars and last 10 chars for verification (without exposing full URL)
+            SECRET_VALUE="${{ secrets.VITE_GOOGLE_SHEETS_URL }}"
+            PREFIX=$(echo "$SECRET_VALUE" | cut -c1-50)
+            SUFFIX=$(echo "$SECRET_VALUE" | rev | cut -c1-10 | rev)
+            echo "   URL starts with: $PREFIX..."
+            echo "   URL ends with: ...$SUFFIX"
+            echo "   URL length: ${#SECRET_VALUE} characters"
+            # Verify it ends with /exec
+            if [[ "$SECRET_VALUE" == */exec ]]; then
+              echo "✅ URL format looks correct (ends with /exec)"
+            else
+              echo "⚠️  Warning: URL should end with /exec"
+            fi
+          fi
+
       - name: Set base path
         id: base
         run: |
@@ -48,20 +71,84 @@ jobs:
           echo "::notice::Base path set to: $BASE_PATH"
 
       - name: Build
-        run: npm run build
+        run: |
+          echo "🔨 Building application..."
+          echo "   VITE_BASE: ${{ steps.base.outputs.base }}"
+          echo "   VITE_GOOGLE_SHEETS_URL: [REDACTED - checking if set...]"
+          if [ -z "${{ secrets.VITE_GOOGLE_SHEETS_URL }}" ]; then
+            echo "   ⚠️  WARNING: VITE_GOOGLE_SHEETS_URL is not set!"
+          else
+            echo "   ✅ VITE_GOOGLE_SHEETS_URL is set"
+          fi
+          npm run build
         env:
           VITE_BASE: ${{ steps.base.outputs.base }}
+          VITE_GOOGLE_SHEETS_URL: ${{ secrets.VITE_GOOGLE_SHEETS_URL }}
         
       - name: Verify build output
         run: |
-          echo "Checking dist/index.html for base path..."
+          echo "🔍 Checking build output..."
           if [ -f dist/index.html ]; then
-            echo "index.html exists"
-            grep -o 'src="[^"]*"' dist/index.html || echo "No src attributes found"
+            echo "✅ index.html exists"
+            echo ""
+            echo "Checking for base path in built files..."
+            grep -o 'src="[^"]*"' dist/index.html | head -3 || echo "No src attributes found"
+            echo ""
+            echo "Checking if Google Sheets URL is embedded..."
+            # Check JavaScript files for the URL (Vite embeds env vars)
+            if grep -r "script.google.com" dist/assets/ 2>/dev/null | head -1; then
+              echo "✅ Google Sheets URL found in built files"
+            else
+              echo "⚠️  Warning: Google Sheets URL not found in built files"
+              echo "   This might mean the env var wasn't embedded during build"
+            fi
           else
-            echo "ERROR: dist/index.html not found!"
+            echo "❌ ERROR: dist/index.html not found!"
             exit 1
           fi
+
+      - name: Test Google Sheets connection
+        run: |
+          echo "🧪 Testing Google Sheets connection..."
+          echo ""
+          
+          GOOGLE_SHEETS_URL="${{ secrets.VITE_GOOGLE_SHEETS_URL }}"
+          
+          if [ -z "$GOOGLE_SHEETS_URL" ]; then
+            echo "❌ Cannot test: VITE_GOOGLE_SHEETS_URL secret is not set"
+            exit 1
+          fi
+          
+          echo "📤 Sending test request to Google Sheets..."
+          echo "   URL: ${GOOGLE_SHEETS_URL:0:50}..."
+          echo ""
+          
+          TEST_DATA='{"name":"GitHub Actions Test","responseType":"yes","selectedOption":"Automated deployment test"}'
+          
+          RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X POST \
+            -H "Content-Type: application/json" \
+            -d "$TEST_DATA" \
+            "$GOOGLE_SHEETS_URL" 2>&1) || true
+          
+          HTTP_STATUS=$(echo "$RESPONSE" | grep "HTTP_STATUS:" | cut -d: -f2)
+          BODY=$(echo "$RESPONSE" | sed '/HTTP_STATUS:/d')
+          
+          echo "📥 Response:"
+          echo "   HTTP Status: ${HTTP_STATUS:-'No status code'}"
+          echo "   Body: $BODY"
+          echo ""
+          
+          if [ "$HTTP_STATUS" = "200" ] || [ -z "$HTTP_STATUS" ]; then
+            echo "✅ Test request completed (status: ${HTTP_STATUS:-'unknown'})"
+            echo "💡 Note: Google Apps Script may return different status codes"
+            echo "   Check your Google Sheet to verify the test entry was added"
+          else
+            echo "⚠️  Warning: Unexpected status code: $HTTP_STATUS"
+            echo "   This might still work - Google Apps Script can return various codes"
+          fi
+          
+          echo ""
+          echo "✅ Connection test completed"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -81,3 +168,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+

@@ -74,3 +74,4 @@ If the workflow hasn't run:
 3. Verify the built files in the `dist` folder have the correct paths (they should start with `/wedsite/`)
 
 If files in the Network tab show 404s, the base path might not be set correctly during build.
+
