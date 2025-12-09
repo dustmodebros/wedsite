@@ -44,12 +44,24 @@ This guide will help you set up Google Sheets to store your wedding RSVP respons
 
 ## Step 4: Configure Your React App
 
+### For Local Development:
+
 1. In your project root, create a `.env` file (copy from `.env.example` if it exists)
 2. Add your Web App URL:
    ```
    VITE_GOOGLE_SHEETS_URL=https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec
    ```
 3. Restart your development server (`npm run dev` or `bun run dev`)
+
+### For Production (GitHub Pages):
+
+1. Go to your GitHub repository: `https://github.com/dustmodebros/wedsite`
+2. Click **Settings** → **Secrets and variables** → **Actions**
+3. Click **New repository secret**
+4. Name: `VITE_GOOGLE_SHEETS_URL`
+5. Value: Your Web App URL (e.g., `https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec`)
+6. Click **Add secret**
+7. The next time you push to `main`, the workflow will use this secret during the build
 
 ## Step 5: Test It!
 
@@ -63,6 +75,10 @@ This guide will help you set up Google Sheets to store your wedding RSVP respons
 - **"Access denied"**: Make sure you set "Who has access" to "Anyone" in the deployment settings
 - **Data not appearing**: Check the Apps Script execution log (View → Executions) for errors
 - **CORS errors**: Make sure you're using the correct Web App URL (ends with `/exec`)
+- **Not saving on GitHub Pages**: 
+  - Make sure you've added `VITE_GOOGLE_SHEETS_URL` as a GitHub secret (see Step 4 above)
+  - After adding the secret, push a new commit to trigger a rebuild
+  - Check the browser console (F12) on the live site to see if the URL is configured
 
 ## Viewing Responses
 
