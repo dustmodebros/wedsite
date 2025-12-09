@@ -9,8 +9,16 @@ interface RSVPOptionProps {
 }
 
 const RSVPOption = ({ text, type, selected, onClick }: RSVPOptionProps) => {
+  // Create a unique id based on the option text
+  const optionId = `rsvp-${type}-${text.slice(0, 20).replace(/\s+/g, '-').toLowerCase()}`;
+  
   return (
     <motion.button
+      id={optionId}
+      name="rsvp-option"
+      type="button"
+      value={text}
+      aria-pressed={selected}
       onClick={onClick}
       whileHover={{ scale: 1.02, rotate: type === "yes" ? 1 : -1 }}
       whileTap={{ scale: 0.98 }}

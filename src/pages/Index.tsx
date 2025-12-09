@@ -24,16 +24,16 @@ const Index = () => {
           </motion.p>
           
           <h1 className="font-display text-5xl md:text-7xl text-foreground mb-6 tracking-tight">
-            Wedding Invitation
+            Mark and Heather's Wedding
           </h1>
           
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="font-display text-2xl md:text-3xl text-gold italic"
+            className="font-body text-2xl md:text-3xl text-gold bold"
           >
-            A Most Distinguished Affair
+            <a href="https://www.saltdeanlido.co.uk/" className="text-primary">Saltdean Lido, Brighton, BN2 8SP</a> - 14th March 2026
           </motion.p>
 
           <div className="divider my-10" />
@@ -45,7 +45,7 @@ const Index = () => {
             className="font-body text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed"
           >
             Your timely response is respectfully requested, that we may ensure 
-            adequate provisions for all distinguished guests.
+            adequate provisions for all distinguished guests (and inadequate provisions for non-distinguished guests).
           </motion.p>
         </motion.header>
 
@@ -67,8 +67,13 @@ const Index = () => {
           className="text-center mt-16"
         >
           <div className="ornament mb-6" />
-          <p className="font-body text-sm tracking-widest uppercase text-muted-foreground">
-            dustmodebros.me
+          <p className="font-body text-sm tracking-widest text-muted-foreground">
+            Hosted with love on dustmodebros.me
+            <br />
+            If you have any problems with the RSVP form, please contact Sam at:
+            <a href="mailto:mistersamstephens@gmail.com" className="text-primary">
+              mistersamstephens@gmail.com
+            </a>
           </p>
         </motion.footer>
       </div>

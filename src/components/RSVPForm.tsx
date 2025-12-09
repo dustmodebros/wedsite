@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import RSVPOption from "./RSVPOption";
@@ -9,20 +9,20 @@ import { Heart, HeartCrack } from "lucide-react";
 
 const yesOptions = [
   "Since my investment in cheese has matured, I have sufficient capital available to escape from Somaliland, and thus will be able to attend the wedding.",
-  "My parole officer has granted me a 24-hour furlough, so count me in!",
-  "I've successfully bribed the ducks blocking my driveway. I'll be there!",
-  "The prophecy has been fulfilled. The stars align. I shall attend.",
-  "My time machine repair is complete, and I have confirmed via future-me that I was indeed present. See you there!",
-  "I've concluded my negotiations with the squirrel mafia. Wedding attendance: approved.",
+  "Example 2 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
+  "Example 3 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
+  "Example 4 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
+  "Example 5 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
+  "Example 6 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
 ];
 
 const noOptions = [
   "My raccoon is scheduled to contract hepatitis on that day so I am sadly unable to attend.",
-  "I am legally obligated to supervise my houseplant's therapy session that weekend.",
-  "The Council of Elders has denied my travel permit to the realm of matrimony.",
-  "I'm stuck in an infinite loop of answering wedding RSVPs and cannot attend any actual weddings.",
-  "My evil twin has already RSVP'd yes and we cannot both be in the same place due to the laws of physics.",
-  "I've been chosen to guard the sacred sandwich. My duty is clear.",
+  "Example 2 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
+  "Example 3 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
+  "Example 4 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
+  "Example 5 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
+  "Example 6 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
 ];
 
 const RSVPForm = () => {
@@ -32,6 +32,38 @@ const RSVPForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
+  // Debug: Check if environment variable is loaded on mount
+  useEffect(() => {
+    const googleSheetsUrl = import.meta.env.VITE_GOOGLE_SHEETS_URL;
+    const logToTerminal = async (message: string, data?: any) => {
+      try {
+        await fetch('/api/rsvp-log', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message, data, timestamp: new Date().toISOString() }),
+        });
+      } catch (e) {
+        // Silently fail - this is just for debugging
+      }
+    };
+    
+    console.log('🔧 Component mounted. Google Sheets URL configured?', !!googleSheetsUrl);
+    if (googleSheetsUrl) {
+      console.log('✅ URL found:', googleSheetsUrl.substring(0, 50) + '...');
+      logToTerminal('🔧 RSVP Form Component Loaded', { 
+        urlConfigured: true,
+        urlPreview: googleSheetsUrl.substring(0, 50) + '...'
+      });
+    } else {
+      console.warn('⚠️ URL not found. Make sure:');
+      console.warn('  1. .env file exists with VITE_GOOGLE_SHEETS_URL=...');
+      console.warn('  2. Dev server was restarted after creating .env');
+      logToTerminal('⚠️ RSVP Form Component Loaded - URL NOT configured', {
+        urlConfigured: false
+      });
+    }
+  }, []);
+
   const handleOptionSelect = (option: string, type: "yes" | "no") => {
     setSelectedOption(option);
     setResponseType(type);
@@ -40,7 +72,24 @@ const RSVPForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Helper to log to terminal via Vite dev server
+    const logToTerminal = async (message: string, data?: any) => {
+      try {
+        await fetch('/api/rsvp-log', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message, data, timestamp: new Date().toISOString() }),
+        });
+      } catch (e) {
+        // Silently fail - this is just for debugging
+      }
+    };
+    
+    await logToTerminal('🚀 RSVP Form Submitted!');
+    console.log('🚀 Form submitted!');
+    
     if (!name.trim()) {
+      console.log('❌ Validation failed: name is empty');
       toast({
         title: "Whoa there, mysterious stranger!",
         description: "We need your name so we know whose plate to lick... er, set.",
@@ -50,18 +99,85 @@ const RSVPForm = () => {
     }
 
     if (!selectedOption) {
+      console.log('❌ Validation failed: no option selected');
       toast({
         title: "Pick your destiny!",
-        description: "Choose one of the ridiculous options above.",
+        description: "Choose one of the options above.",
         variant: "destructive",
       });
       return;
     }
 
+    await logToTerminal('✅ Validation passed, starting submission...');
+    console.log('✅ Validation passed, starting submission...');
     setIsSubmitting(true);
 
-    // Simulate API call - will be replaced with Supabase later
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      // Send data to Google Sheets - exactly matching test-rsvp.js
+      const googleSheetsUrl = import.meta.env.VITE_GOOGLE_SHEETS_URL;
+      
+      await logToTerminal('🔍 Checking Google Sheets URL...', { 
+        urlExists: !!googleSheetsUrl,
+        urlPreview: googleSheetsUrl ? googleSheetsUrl.substring(0, 50) + '...' : 'undefined'
+      });
+      console.log('🔍 Checking Google Sheets URL...');
+      console.log('URL exists?', !!googleSheetsUrl);
+      console.log('URL value:', googleSheetsUrl ? googleSheetsUrl.substring(0, 50) + '...' : 'undefined');
+      
+      if (!googleSheetsUrl || googleSheetsUrl === 'your_web_app_url_here') {
+        await logToTerminal('⚠️ Google Sheets URL not configured', { 
+          name: name.trim(), 
+          responseType, 
+          selectedOption 
+        });
+        console.warn('⚠️ Google Sheets URL not configured. Set VITE_GOOGLE_SHEETS_URL in .env file');
+        console.log('RSVP Response (not saved):', { name: name.trim(), responseType, selectedOption });
+        // Continue without saving - don't block the user experience
+      } else {
+        // Prepare data exactly like test script
+        const rsvpData = {
+          name: name.trim(),
+          responseType,
+          selectedOption,
+        };
+
+        await logToTerminal('📤 Sending RSVP data to Google Sheets', rsvpData);
+        console.log('📤 Sending RSVP data:', rsvpData);
+        console.log('🔗 URL:', googleSheetsUrl);
+        
+        // Google Apps Script often blocks CORS; always use no-cors to ensure data sends.
+        try {
+          await fetch(googleSheetsUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(rsvpData),
+          });
+
+          await logToTerminal('✅ RSVP sent (no-cors mode - cannot verify response)');
+          console.log('✅ RSVP sent using no-cors mode');
+          console.log('⚠️ Cannot verify response due to CORS, but data should be saved');
+          console.log('💡 Check your Google Sheet to confirm the entry was added');
+        } catch (noCorsError) {
+          await logToTerminal('❌ Failed to send RSVP (no-cors)', { error: String(noCorsError) });
+          throw noCorsError;
+        }
+      }
+    } catch (error) {
+      await logToTerminal('❌ Failed to send RSVP data', { 
+        error: error instanceof Error ? error.message : String(error) 
+      });
+      console.error('❌ Failed to send RSVP data:', error);
+      console.error('Error details:', error instanceof Error ? error.message : String(error));
+      toast({
+        title: "Oops!",
+        description: "There seems to have been an error and we couldn't save your response, please try again or contact us directly.",
+        variant: "destructive",
+      });
+      // Continue anyway - don't block the user experience
+    }
 
     if (responseType === "yes") {
       confetti({
@@ -71,13 +187,13 @@ const RSVPForm = () => {
         colors: ["#e07850", "#5d9a7d", "#d4849a"],
       });
       toast({
-        title: "HUZZAH! 🎉",
-        description: "Your presence has been noted in the sacred scrolls of attendance.",
+        title: "Yippee! 🎉",
+        description: "We're so excited to have you there!",
       });
     } else {
       toast({
         title: "We understand... 💔",
-        description: "Your raccoon's health comes first. We'll save you some cake in spirit.",
+        description: "We'll save you some cake in spirit!",
       });
     }
 
@@ -99,7 +215,7 @@ const RSVPForm = () => {
               See you there, {name}!
             </h2>
             <p className="text-muted-foreground mt-4 text-lg">
-              We're absolutely thrilled you're coming. Don't forget to bring your escaped-from-Somaliland vibes!
+              We're absolutely thrilled you're coming!
             </p>
           </>
         ) : (
@@ -109,7 +225,7 @@ const RSVPForm = () => {
               We'll miss you, {name}!
             </h2>
             <p className="text-muted-foreground mt-4 text-lg">
-              We hope your raccoon makes a full recovery. You'll be there in spirit! 🦝
+              That's a shame. Hope to see you soon!
             </p>
           </>
         )}
@@ -133,15 +249,17 @@ const RSVPForm = () => {
     <form onSubmit={handleSubmit} className="space-y-8">
       <div className="space-y-2">
         <label htmlFor="name" className="font-display text-2xl text-foreground">
-          Who art thou?
+          Who might you be?
         </label>
         <Input
           id="name"
+          name="name"
           type="text"
-          placeholder="Your name (or alias, we don't judge)"
+          placeholder="Someone interesting, we hope:"
           value={name}
           onChange={(e) => setName(e.target.value)}
           className="text-lg py-6 bg-card"
+          autoComplete="name"
         />
       </div>
 
@@ -169,7 +287,7 @@ const RSVPForm = () => {
         <div className="space-y-4">
           <h3 className="font-display text-3xl text-blush flex items-center gap-2">
             <HeartCrack className="w-6 h-6" />
-            Alas, I cannot...
+            Alas, I cannot, because...
           </h3>
           <div className="space-y-3">
             {noOptions.map((option) => (
@@ -199,7 +317,7 @@ const RSVPForm = () => {
               disabled={isSubmitting}
               className="font-display text-2xl px-12 py-6 bg-primary hover:bg-primary/90"
             >
-              {isSubmitting ? "Consulting the oracle..." : "Submit My Fate"}
+              {isSubmitting ? "Awaiting choice..." : "Submit My Response"}
             </Button>
           </motion.div>
         )}
