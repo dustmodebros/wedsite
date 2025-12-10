@@ -287,7 +287,7 @@ const RSVPForm = () => {
     <form onSubmit={handleSubmit} className="space-y-8">
       <div className="space-y-2">
         <label htmlFor="name" className="font-display text-2xl text-foreground">
-          Who might you be?
+          State your name.
         </label>
         <Input
           id="name"
