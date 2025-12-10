@@ -307,7 +307,7 @@ const RSVPForm = () => {
         <div className="space-y-4">
           <h3 className="font-display text-3xl text-blush flex items-center gap-2">
             <HeartCrack className="w-6 h-6" />
-            Alas, I cannot attend, because...
+            Alas, I can't attend, because...
           </h3>
           <div className="space-y-3">
             {noOptions.map((option) => (
