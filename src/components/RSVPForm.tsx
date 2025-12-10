@@ -132,7 +132,7 @@ const RSVPForm = () => {
       console.log('❌ Validation failed: name contains invalid characters');
       toast({
         title: "Nice try",
-        description: "are you really trying to pen-test a wedding RSVP form...? I admire your commitment!",
+        description: "Are you really trying to pen-test a wedding RSVP form...? Gotta say that I admire the attempt!",
         variant: "destructive",
       });
       return;
