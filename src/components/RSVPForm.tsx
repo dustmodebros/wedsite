@@ -69,6 +69,24 @@ const RSVPForm = () => {
     setResponseType(type);
   };
 
+  const validateName = (nameValue: string): boolean => {
+    const trimmedName = nameValue.trim();
+    
+    // Check if name starts with "="
+    if (trimmedName.startsWith('=')) {
+      return false;
+    }
+    
+    // Check if name contains a URL/link
+    // Match common URL patterns: http://, https://, www., or domain patterns like .com, .org, etc.
+    const urlPattern = /(https?:\/\/|www\.|[a-zA-Z0-9-]+\.[a-zA-Z]{2,})/i;
+    if (urlPattern.test(trimmedName)) {
+      return false;
+    }
+    
+    return true;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -93,6 +111,17 @@ const RSVPForm = () => {
       toast({
         title: "Whoa there, mysterious stranger!",
         description: "We need your name so we know who to save a seat for!",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate name for security (prevent formula injection and links)
+    if (!validateName(name)) {
+      console.log('❌ Validation failed: name contains invalid characters');
+      toast({
+        title: "Nice try",
+        description: "are you really trying to pen-test a wedding RSVP form...? I admire your commitment!",
         variant: "destructive",
       });
       return;
@@ -260,6 +289,7 @@ const RSVPForm = () => {
           onChange={(e) => setName(e.target.value)}
           className="text-lg py-6 bg-card"
           autoComplete="name"
+          maxLength={100}
         />
       </div>
 
