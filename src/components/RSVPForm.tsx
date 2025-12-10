@@ -306,7 +306,7 @@ const RSVPForm = () => {
         {/* No Options */}
         <div className="space-y-4">
           <h3 className="font-display text-3xl text-blush flex items-center gap-2">
-            <HeartCrack className="w-6 h-6" />
+            <HeartCrack className="w-6 h-6 shrink-0" />
             Alas, I can't attend, because...
           </h3>
           <div className="space-y-3">
