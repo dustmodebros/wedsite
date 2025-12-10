@@ -9,20 +9,18 @@ import { Heart, HeartCrack } from "lucide-react";
 
 const yesOptions = [
   "Since my investment in cheese has matured, I have sufficient capital available to escape from Somaliland, and thus will be able to attend the wedding.",
-  "yes option 2 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
-  "yes option 3 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
-  "yes option 4 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
-  "yes option 5 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
-  "yes option 6 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
+  "May as well, I've never been to a gay wedding before.",
+  "I'm going, but only for a chance at the best men.",
+  "אמממ, מרק. אני ממש מתה עליו. אף פעם לא נמאס לי ממנו, יהיה קצת בחתונה?.",
+  "I'm going for the boats and hoes.",
 ];
 
 const noOptions = [
   "My raccoon is scheduled to contract hepatitis on that day so I am sadly unable to attend.",
-  "no option 2 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
-  "no option 3 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
-  "no option 4 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
-  "no option 5 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
-  "no option 6 Lorem ipsum dolor sit amet, consecteur adipiscing elit.",
+  "I've been banned from visiting Brighton due to running a seagull fight club.",
+  "ممم، حساء. أعشقه بكل معنى الكلمة. لا أستطيع الاكتفاء منه أبداً، هل سيكون هناك حساء في حفل الزفاف؟",
+  "I can't be there because I'm too busy running my charity to supply fentanyl to children in my area.",
+  "Jimbles - the website is almost ready. Can we have your best gags for acceptance and rejection. Two of each would be fine. ❤️",
 ];
 
 const RSVPForm = () => {
@@ -305,25 +303,6 @@ const RSVPForm = () => {
       </div>
 
       <div className="grid md:grid-cols-2 gap-8">
-        {/* Yes Options */}
-        <div className="space-y-4">
-          <h3 className="font-display text-3xl text-sage flex items-center gap-2">
-            <Heart className="w-6 h-6" />
-            I shall attend!
-          </h3>
-          <div className="space-y-3">
-            {yesOptions.map((option) => (
-              <RSVPOption
-                key={option}
-                text={option}
-                type="yes"
-                selected={selectedOption === option}
-                onClick={() => handleOptionSelect(option, "yes")}
-              />
-            ))}
-          </div>
-        </div>
-
         {/* No Options */}
         <div className="space-y-4">
           <h3 className="font-display text-3xl text-blush flex items-center gap-2">
@@ -338,6 +317,25 @@ const RSVPForm = () => {
                 type="no"
                 selected={selectedOption === option}
                 onClick={() => handleOptionSelect(option, "no")}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Yes Options */}
+        <div className="space-y-4">
+          <h3 className="font-display text-3xl text-sage flex items-center gap-2">
+            <Heart className="w-6 h-6" />
+            I shall attend!
+          </h3>
+          <div className="space-y-3">
+            {yesOptions.map((option) => (
+              <RSVPOption
+                key={option}
+                text={option}
+                type="yes"
+                selected={selectedOption === option}
+                onClick={() => handleOptionSelect(option, "yes")}
               />
             ))}
           </div>
