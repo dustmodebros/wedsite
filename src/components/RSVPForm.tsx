@@ -116,6 +116,17 @@ const RSVPForm = () => {
       return;
     }
 
+    // Validate name length
+    if (name.trim().length > 100) {
+      console.log('❌ Validation failed: name exceeds 100 characters');
+      toast({
+        title: "That's quite a name!",
+        description: "Please keep your name under 100 characters.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     // Validate name for security (prevent formula injection and links)
     if (!validateName(name)) {
       console.log('❌ Validation failed: name contains invalid characters');
