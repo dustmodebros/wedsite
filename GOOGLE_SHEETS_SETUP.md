@@ -12,6 +12,7 @@ This guide will help you set up Google Sheets to store your wedding RSVP respons
    - **B1**: `Name`
    - **C1**: `Response Type`
    - **D1**: `Selected Option`
+   - **E1**: `Additional Notes`
 
 ## Step 2: Set Up Google Apps Script
 

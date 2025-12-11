@@ -3,30 +3,28 @@ import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import RSVPOption from "./RSVPOption";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 import { Heart, HeartCrack } from "lucide-react";
 
 const yesOptions = [
-  "Since my investment in cheese has matured, I have sufficient capital available to escape from Somaliland, and thus will be able to attend the wedding.",
-  "May as well, I've never been to a gay wedding before.",
-  "I'm going, but only for a chance at the best men.",
-  "אמממ, מרק. אני ממש מתה עליו. אף פעם לא נמאס לי ממנו, יהיה קצת בחתונה?.",
-  "I'm going for the boats and hoes.",
+  "Ooh - I love a rainbow wedding!",
+  "I have no choice in the matter.",
+  "There is no place I'd rather be, and nothing I'd rather do.",
 ];
 
 const noOptions = [
-  "My raccoon is scheduled to contract hepatitis on that day so I am sadly unable to attend.",
-  "I've been banned from visiting Brighton due to running a seagull fight club.",
-  "ممم، حساء. أعشقه بكل معنى الكلمة. لا أستطيع الاكتفاء منه أبداً، هل سيكون هناك حساء في حفل الزفاف؟",
-  "I can't be there because I'm too busy running my charity to supply fentanyl to children in my area.",
-  "Jimbles - the website is almost ready. Can we have your best gags for acceptance and rejection. Two of each would be fine. ❤️",
+  "Although I would love to come I need to shampoo my raccoon at 1pm on 14th March 2026.",
+  "I can't return to Brighton ... y'know ... because of the injuction.",
+  "I would rather be studding Euros into a slot, sighing and missing my tether for living.",
 ];
 
 const RSVPForm = () => {
   const [name, setName] = useState("");
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [responseType, setResponseType] = useState<"yes" | "no" | null>(null);
+  const [additionalNotes, setAdditionalNotes] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
@@ -177,6 +175,7 @@ const RSVPForm = () => {
           name: name.trim(),
           responseType,
           selectedOption,
+          additionalNotes: additionalNotes.trim() || null,
         };
 
         await logToTerminal('📤 Sending RSVP data to Google Sheets', rsvpData);
@@ -287,7 +286,7 @@ const RSVPForm = () => {
     <form onSubmit={handleSubmit} className="space-y-8">
       <div className="space-y-2">
         <label htmlFor="name" className="font-display text-2xl text-foreground">
-          State your name.
+          Who was your invitation addressed to?
         </label>
         <Input
           id="name"
@@ -344,21 +343,42 @@ const RSVPForm = () => {
 
       <AnimatePresence>
         {selectedOption && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="flex justify-center pt-4"
-          >
-            <Button
-              type="submit"
-              size="lg"
-              disabled={isSubmitting}
-              className="font-display text-2xl px-12 py-6 bg-primary hover:bg-primary/90"
+          <>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              className="space-y-2"
             >
-              {isSubmitting ? "Submitting..." : "Submit My Response"}
-            </Button>
-          </motion.div>
+              <label htmlFor="additionalNotes" className="font-display text-2xl text-foreground">
+                Anything else we <u>really</u> need to know?
+              </label>
+              <Textarea
+                id="additionalNotes"
+                name="additionalNotes"
+                placeholder="(Optional)"
+                value={additionalNotes}
+                onChange={(e) => setAdditionalNotes(e.target.value)}
+                className="text-lg py-4 bg-card min-h-[100px]"
+                rows={4}
+              />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              className="flex justify-center pt-4"
+            >
+              <Button
+                type="submit"
+                size="lg"
+                disabled={isSubmitting}
+                className="font-display text-2xl px-12 py-6 bg-primary hover:bg-primary/90"
+              >
+                {isSubmitting ? "Submitting..." : "Submit My Response"}
+              </Button>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </form>

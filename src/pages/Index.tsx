@@ -20,7 +20,7 @@ const Index = () => {
             transition={{ delay: 0.3 }}
             className="font-body text-sm tracking-widest uppercase text-muted-foreground mb-6"
           >
-            The Honour of Your Presence is Requested
+            Can you come to?
           </motion.p>
           
           <h1 className="font-display text-5xl md:text-7xl text-foreground mb-6 tracking-tight">
@@ -33,7 +33,7 @@ const Index = () => {
             transition={{ delay: 0.5 }}
             className="font-body text-2xl md:text-3xl text-gold bold"
           >
-            <a href="https://www.saltdeanlido.co.uk/" className="text-primary">Saltdean Lido, Brighton, BN2 8SP</a> - 14th March 2026
+            <a href="https://www.saltdeanlido.co.uk/" className="text-primary">Saltdean Lido, Brighton, BN2 8SP</a> <br /> 1pm on 14th March 2026
           </motion.p>
 
           <div className="divider my-10" />
@@ -44,8 +44,7 @@ const Index = () => {
             transition={{ delay: 0.7 }}
             className="font-body text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed"
           >
-            Your timely response is respectfully requested, that we may ensure 
-            adequate provisions for all distinguished guests (and inadequate provisions for non-distinguished guests).
+            A timely response is respectfully requested, so that fulsome provision can be made for our distinguished guests (and to avoid having to cobble something together at the last minute for slackers).
           </motion.p>
         </motion.header>
 

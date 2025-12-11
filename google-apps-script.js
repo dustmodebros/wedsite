@@ -3,7 +3,7 @@
  * 
  * SETUP INSTRUCTIONS:
  * 1. Create a new Google Sheet (or use an existing one)
- * 2. In the first row, add these headers: Timestamp, Name, Response Type, Selected Option
+ * 2. In the first row, add these headers: Timestamp, Name, Response Type, Selected Option, Additional Notes
  * 3. Open Extensions > Apps Script
  * 4. Delete the default code and paste this entire file
  * 5. Click "Deploy" > "New deployment"
@@ -18,7 +18,7 @@ function doPost(e) {
   try {
     // Parse the incoming data
     const data = JSON.parse(e.postData.contents);
-    const { name, responseType, selectedOption } = data;
+    const { name, responseType, selectedOption, additionalNotes } = data;
 
     // Get the active spreadsheet
     const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
@@ -29,7 +29,8 @@ function doPost(e) {
       timestamp,
       name || '',
       responseType || '',
-      selectedOption || ''
+      selectedOption || '',
+      additionalNotes || ''
     ]);
 
     // Return success response with CORS headers
@@ -62,7 +63,8 @@ function test() {
   const testData = {
     name: "Test User",
     responseType: "yes",
-    selectedOption: "Test option"
+    selectedOption: "Test option",
+    additionalNotes: "Test additional notes"
   };
   
   const mockEvent = {

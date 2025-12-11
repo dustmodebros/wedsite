@@ -123,7 +123,7 @@ jobs:
           echo "   URL: ${GOOGLE_SHEETS_URL:0:50}..."
           echo ""
           
-          TEST_DATA='{"name":"GitHub Actions Test","responseType":"yes","selectedOption":"Automated deployment test"}'
+          TEST_DATA='{"name":"GitHub Actions Test","responseType":"yes","selectedOption":"Automated deployment test","additionalNotes":"Testing additional notes column"}'
           
           RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X POST \
             -H "Content-Type: application/json" \
@@ -168,4 +168,5 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
 
