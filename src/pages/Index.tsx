@@ -20,7 +20,7 @@ const Index = () => {
             transition={{ delay: 0.3 }}
             className="font-body text-sm tracking-widest uppercase text-muted-foreground mb-6"
           >
-            Can you come to?
+            Can you come to...?
           </motion.p>
           
           <h1 className="font-display text-5xl md:text-7xl text-foreground mb-6 tracking-tight">
