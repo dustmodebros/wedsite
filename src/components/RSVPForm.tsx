@@ -356,7 +356,7 @@ const RSVPForm = () => {
               <Textarea
                 id="additionalNotes"
                 name="additionalNotes"
-                placeholder="(Extremely optional)"
+                placeholder="(Are you really, REALLY sure we need to know?)"
                 value={additionalNotes}
                 onChange={(e) => setAdditionalNotes(e.target.value)}
                 className="text-lg py-4 bg-card min-h-[100px]"
