@@ -44,7 +44,7 @@ const Index = () => {
             transition={{ delay: 0.7 }}
             className="font-body text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed"
           >
-            A timely response is respectfully requested, so that fulsome provision can be made for our distinguished guests (and to avoid having to cobble something together at the last minute for slackers).
+            A timely response is respectfully requested, so that fulsome provision can be made for our distinguished guests (and so we don't have to cobble something together at the last minute for slackers).
           </motion.p>
         </motion.header>
 
