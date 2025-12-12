@@ -16,8 +16,8 @@ const yesOptions = [
 
 const noOptions = [
   "Although I would love to come I need to shampoo my raccoon at 1pm on 14th March 2026.",
-  "I can't return to Brighton ... y'know ... because of the injuction.",
-  "I would rather be studding Euros into a slot, sighing and missing my tether for living.",
+  "I can't come to Brighton. Y'know ... the injunction.",
+  "I would rather be thumbing Euros into a slot machine and sighing.",
 ];
 
 const RSVPForm = () => {
